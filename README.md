@@ -6,7 +6,7 @@ This is a **work in progress** and for my internal use only.  Feel free to use i
 
 ## What it does
 
-Checks for the following at the domain of the page you're visting (or loading):
+Checks for the following at the domain of the page you're visiting (or loading):
 
 - /phpinfo.php
 - /robots.txt
@@ -16,7 +16,6 @@ Shows whether these exist in a popup for the extension.  Extension indicator tur
 Note this does not check all web requests. Instead, it checks the navigation - which is basically the top-level request you've made.
 
 ## Todo
-- [ ] display content in popup
 - [ ] time-based expiration of cache
 - [ ] make checks a group of async tasks instead of awaiting each one (make sure not to throttle, though)
 - [ ] add more checks
