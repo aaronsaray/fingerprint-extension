@@ -1,10 +1,54 @@
 <html>
 
+<head>
+    <style>
+        html {
+            background-color: #35363a;
+            color: #eaeaea;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-top: 0;
+        }
+
+        main {
+            padding: 1.5rem;
+        }
+
+        ul {
+            padding-left: 15px;
+        }
+
+        a {
+            color: #ffffff;
+        }
+
+        .results-node-none {
+            color: #ff0000;
+        }
+    </style>
+</head>
+
 <body>
-    <h1>I am the popup</h1>
-    <p>
-        Links will appear here.
-    </p>
+    <main>
+        <h1>Fingerprints:</h1>
+        <div>
+            <div class="results-node-none">None</div>
+            <ul class="results-node"></ul>
+        </div>
+    </main>
+    <template id="results-item-node-template">
+        <li><a target="_blank"></a></li>
+    </template>
+    <script src="popup.js"></script>
 </body>
 
 </html>
