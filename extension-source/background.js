@@ -1,64 +1,60 @@
-"use strict";
+async function scanForItems(domain, baseUrl, currentVersion) {
+  const data = {
+    cacheVersion: currentVersion,
+    found: [],
+  };
 
-async function navigationCompleted(details) {
-    await chrome.action.setIcon({ path: "images/standard-icon.png" });
+  const phpInfoFile = `${baseUrl}/phpinfo.php`;
+  const phpInfoFileResult = await fetch(phpInfoFile, { method: 'HEAD' });
+  if (phpInfoFileResult.ok) {
+    data.found.push(phpInfoFile);
+  }
 
-    const url = new URL(details.url);
-    const domain = url.host;
-    const baseUrl = url.protocol + '//' + domain;
-    const currentVersion = chrome.runtime.getManifest().version;
+  const robotsFile = `${baseUrl}/robots.txt`;
+  const robotsFileResult = await fetch(robotsFile, { method: 'HEAD' });
+  if (robotsFileResult.ok) {
+    data.found.push(robotsFile);
+  }
 
-    const results = await processInitialCache(domain, baseUrl, currentVersion);
-
-    if (results.found.length) {
-        chrome.action.setIcon({ path: "images/found-icon.png" });
-    }
+  return data;
 }
 
 async function processInitialCache(domain, baseUrl, currentVersion) {
-    const incoming = await chrome.storage.local.get(domain);
-    let cacheData = incoming[domain];
+  const incoming = await chrome.storage.local.get(domain);
+  let cacheData = incoming[domain];
 
-    if (cacheData && cacheData.cacheVersion === currentVersion) {
-        // do nothing - maybe make a better reverse of this if statement - heh.
-    } else {
-        cacheData = await scanForItems(domain, baseUrl, currentVersion);
-        await chrome.storage.local.set({ [domain]: cacheData });
-    }
+  if (cacheData && cacheData.cacheVersion === currentVersion) {
+    // do nothing - maybe make a better reverse of this if statement - heh.
+  } else {
+    cacheData = await scanForItems(domain, baseUrl, currentVersion);
+    await chrome.storage.local.set({ [domain]: cacheData });
+  }
 
-    return cacheData;
-};
+  return cacheData;
+}
 
-async function scanForItems(domain, baseUrl, currentVersion) {
-    return new Promise(async (resolve) => {
-        let data = {
-            cacheVersion: currentVersion,
-            found: []
-        };
+async function navigationCompleted(details) {
+  await chrome.action.setIcon({ path: 'images/standard-icon.png' });
 
-        const phpinfoFile = `${baseUrl}/phpinfo.php`;
-        const phpinfoFileResult = await fetch(phpinfoFile, { method: 'HEAD' });
-        if (phpinfoFileResult.ok) {
-            data.found.push(phpinfoFile);
-        }
+  const url = new URL(details.url);
+  const domain = url.host;
+  const baseUrl = `${url.protocol}//${domain}`;
+  const currentVersion = chrome.runtime.getManifest().version;
 
-        const robotsFile = `${baseUrl}/robots.txt`;
-        const robotsFileResult = await fetch(robotsFile, { method: 'HEAD' });
-        if (robotsFileResult.ok) {
-            data.found.push(robotsFile);
-        }
+  const results = await processInitialCache(domain, baseUrl, currentVersion);
 
-        resolve(data);
-    });
+  if (results.found.length) {
+    chrome.action.setIcon({ path: 'images/found-icon.png' });
+  }
 }
 
 chrome.webNavigation.onCompleted.addListener(navigationCompleted, {
-    url: [
-        {
-            schemes: [
-                'http',
-                'https'
-            ]
-        }
-    ]
+  url: [
+    {
+      schemes: [
+        'http',
+        'https',
+      ],
+    },
+  ],
 });
