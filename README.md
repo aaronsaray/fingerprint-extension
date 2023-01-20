@@ -1,7 +1,7 @@
-<center>
+<p align="center">
     <img width="128" height="128" src="gh-image.svg">
     <h1>Fingerprint Extension</h1>
-</center>
+</p>
 
 This is a security-based chrome extension I have installed locally.  You can learn to [install unpacked extensions here](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked) but you probably shouldn't do this unless you know what you're doing.
 
