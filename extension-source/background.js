@@ -42,7 +42,7 @@ async function navigationCompleted(details) {
   const currentVersion = chrome.runtime.getManifest().version;
 
   const results = await processInitialCache(domain, baseUrl, currentVersion);
-  console.log('results', domain, results);
+
   if (results.found.length) {
     chrome.action.setIcon({ path: 'images/found-icon.png' });
   }
