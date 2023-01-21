@@ -1,19 +1,28 @@
-async function scanForItems(domain, baseUrl, currentVersion) {
+async function scanForItems(baseUrl, currentVersion) {
   const data = {
     cacheVersion: currentVersion,
-    found: [],
+    found: {
+      info: [],
+      warn: [],
+    },
   };
 
   const phpInfoFile = `${baseUrl}/phpinfo.php`;
   const phpInfoFileResult = await fetch(phpInfoFile, { method: 'HEAD' });
   if (phpInfoFileResult.ok) {
-    data.found.push(phpInfoFile);
+    data.found.warn.push(phpInfoFile);
+  }
+
+  const testPhpFile = `${baseUrl}/test.php`;
+  const testPhpFileResult = await fetch(testPhpFile, { method: 'HEAD' });
+  if (testPhpFileResult.ok) {
+    data.found.warn.push(testPhpFileResult);
   }
 
   const robotsFile = `${baseUrl}/robots.txt`;
   const robotsFileResult = await fetch(robotsFile, { method: 'HEAD' });
   if (robotsFileResult.ok) {
-    data.found.push(robotsFile);
+    data.found.info.push(robotsFile);
   }
 
   return data;
@@ -26,7 +35,7 @@ async function processInitialCache(domain, baseUrl, currentVersion) {
   if (cacheData && cacheData.cacheVersion === currentVersion) {
     // do nothing - maybe make a better reverse of this if statement - heh.
   } else {
-    cacheData = await scanForItems(domain, baseUrl, currentVersion);
+    cacheData = await scanForItems(baseUrl, currentVersion);
     await chrome.storage.local.set({ [domain]: cacheData });
   }
 
@@ -34,7 +43,7 @@ async function processInitialCache(domain, baseUrl, currentVersion) {
 }
 
 async function navigationCompleted(details) {
-  await chrome.action.setIcon({ path: 'images/standard-icon.png' });
+  await chrome.action.setIcon({ path: 'images/action/none.png' });
 
   const url = new URL(details.url);
   const domain = url.host;
@@ -43,8 +52,10 @@ async function navigationCompleted(details) {
 
   const results = await processInitialCache(domain, baseUrl, currentVersion);
 
-  if (results.found.length) {
-    chrome.action.setIcon({ path: 'images/found-icon.png' });
+  if (results.found.warn.length) {
+    chrome.action.setIcon({ path: 'images/action/warn.png' });
+  } else if (results.found.info.length) {
+    chrome.action.setIcon({ path: 'images/action/info.png' });
   }
 }
 

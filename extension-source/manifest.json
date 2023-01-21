@@ -2,10 +2,10 @@
     "manifest_version": 3,
     "name": "Checker",
     "description": "Does security checks of the current domain.",
-    "version": "1.0",
+    "version": "2.0",
     "action": {
         "default_popup": "popup.html",
-        "default_icon": "images/standard-icon.png"
+        "default_icon": "images/action/none.png"
     },
     "icons": {
         "16": "images/extension-display-icon.png",
@@ -17,7 +17,6 @@
         "service_worker": "background.js"
     },
     "permissions": [
-        "action",
         "storage",
         "unlimitedStorage",
         "webNavigation"

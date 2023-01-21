@@ -31,8 +31,16 @@
             color: #ffffff;
         }
 
+        .results-node {
+            white-space: nowrap;
+        }
+
         .results-node-none {
             color: #ff0000;
+        }
+
+        .d-none {
+            display: none;
         }
     </style>
 </head>
@@ -42,7 +50,14 @@
         <h1>Fingerprints:</h1>
         <div>
             <div class="results-node-none">None</div>
-            <ul class="results-node"></ul>
+            <section id="results-node-warn" class="d-none">
+                <h2>Warning</h2>
+                <ul class="results-node"></ul>
+            </section>
+            <section id="results-node-info" class="d-none">
+                <h2>Info</h2>
+                <ul class="results-node"></ul>
+            </section>
         </div>
     </main>
     <template id="results-item-node-template">

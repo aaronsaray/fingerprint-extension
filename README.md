@@ -18,6 +18,24 @@ Shows whether these exist in a popup for the extension.  Extension indicator tur
 
 Note this does not check all web requests. Instead, it checks the navigation - which is basically the top-level request you've made.
 
+## Technical Notes
+
+### Extension Source
+
+The extension source code - which should be loaded unpacked - is in `./extension-source`
+
+### Test Servers
+
+First - set up DNSMasq so anything `.test` maps to `127.0.0.1`
+
+#### Server With Nothing
+
+`php -S fingerprint-none.test:9999 -t test-server/fingerprint-none`
+
+#### Server With Info (Robots.txt)
+
+`php -S fingerprint-robots.test:9999 -t test-server/fingerprint-robots`
+
 ## Todo
 - [ ] time-based expiration of cache
 - [ ] make checks a group of async tasks instead of awaiting each one (make sure not to throttle, though)
