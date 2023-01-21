@@ -32,9 +32,17 @@ First - set up DNSMasq so anything `.test` maps to `127.0.0.1`
 
 `php -S fingerprint-none.test:9999 -t test-server/fingerprint-none`
 
-#### Server With Info (Robots.txt)
+#### Server With Info (robots.txt)
 
 `php -S fingerprint-robots.test:9999 -t test-server/fingerprint-robots`
+
+#### Server With Warning (phpinfo.php)
+
+`php -S fingerprint-phpinfo.test:9999 -t test-server/fingerprint-phpinfo`
+
+#### Server With Everything
+
+`php -S fingerprint-kitchen-sink.test:9999 -t test-server/fingerprint-kitchen-sink`
 
 ## Todo
 - [ ] time-based expiration of cache

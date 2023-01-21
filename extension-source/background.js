@@ -16,7 +16,7 @@ async function scanForItems(baseUrl, currentVersion) {
   const testPhpFile = `${baseUrl}/test.php`;
   const testPhpFileResult = await fetch(testPhpFile, { method: 'HEAD' });
   if (testPhpFileResult.ok) {
-    data.found.warn.push(testPhpFileResult);
+    data.found.warn.push(testPhpFile);
   }
 
   const robotsFile = `${baseUrl}/robots.txt`;
