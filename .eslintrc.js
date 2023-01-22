@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     es2021: true,
     webextensions: true,
@@ -13,4 +14,5 @@ module.exports = {
   },
   rules: {
   },
+  reportUnusedDisableDirectives: true,
 };
