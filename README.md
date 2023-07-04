@@ -48,3 +48,5 @@ First - set up DNSMasq so anything `.test` maps to `127.0.0.1`
 - [ ] time-based expiration of cache
 - [ ] make checks a group of async tasks instead of awaiting each one (make sure not to throttle, though)
 - [ ] add more checks
+- [ ] figure out why it's turning red on different tabs - I think the state is not tab dependent
+- [ ] different color icon for warnings vs errors - ie things that are ok (robots.txt) and scary things (phpinfo)
